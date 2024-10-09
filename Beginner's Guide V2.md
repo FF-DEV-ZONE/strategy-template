@@ -22,7 +22,7 @@ class SimpleStrategy(bt.Strategy):
         super(SimpleStrategy, self).__init__()
 
     # 每次数据源 (此处按照MyFeed定义是CAPITALCOM:HK50的行情数据) 更新都会触发, 实现具体策略逻辑
-    # self中包含市场行情、行情指标、账户余额、仓位等, 具体参考下文 3 策略属性
+    # self中包含市场行情、行情指标、账户余额、仓位等, 具体参考下文 3策略属性
     def next(self):
         dt = self.data.datetime.datetime(0).replace(tzinfo=pytz.utc).astimezone().strftime("%Y-%m-%d %H:%M:%S")
         # 打印当前时间及这个时间点的收盘价
@@ -104,7 +104,7 @@ self.position.size，返回仓位数量，大于0表示多头仓位，小于0表
 
 可在策略的构造函数init中声明指标a，在next方法中通过self.a访问该指标，self.a[0]指标的当前值，self.a[-1]指标的上一个值。
 
-目前指标分为内部指标和backtrader可用指标，<span style="color:red; font-weight:bold;">目前内部信号都是1分钟级别信号</span>，可用内部指标如下：
+指标分为内部指标和backtrader可用指标，<span style="color:red; font-weight:bold;">目前内部信号都是1分钟级别信号</span>，可用内部指标如下：
 - **Trend** 行情未来趋势的预测指标信号，详见[Reference - Trend](#Trend)
 - **TurningPoint** 对行情转折预测的信号，详见[Reference - TurningPoint](#TurningPoint)
   
@@ -218,6 +218,7 @@ if __name__ == '__main__':
     # cerebro.run() 
     run_and_show_performance(cerebro)
 ```
+执行之后得到的结果分为总体性能列表和指标图像两部分，详细说明:
 
 - **总体性能**
 
@@ -239,13 +240,13 @@ if __name__ == '__main__':
 
 - **账户价值、买卖点、回撤、仓位**
 
-(图中的数值仅作示例)
+(图中的数值仅作示例, 从上到下依次为账户价值、买卖点、回撤、仓位)
 
 <img src="./images/perf_result.png" alt="Alt text" width="400">
 
 
 
-恭喜你，你完成了你的第一个Backtrader策略。你可以继续查阅本文档的其他部分优化策略。
+**恭喜你，你完成了你的第一个Backtrader策略。你可以继续查阅本文档的其他部分优化策略。**
 
 # ffquant库Reference
 
