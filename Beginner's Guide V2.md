@@ -122,7 +122,8 @@ class SimpleStrategy(bt.Strategy):
         super(SimpleStrategy, self).__init__()
         # 声明指标
         self.trend = Trend(symbol="CAPITALCOM:HK50")
-        # self.sma = bt.indicators.SimpleMovingAverage(self.datas[0], period=10) # 引入backtrader自带的指标
+        # 引入backtrader自带的指标
+        self.sma = bt.indicators.SimpleMovingAverage(self.datas[0], period=10)
 
     def next(self):
         dt = self.data.datetime.datetime(0).replace(tzinfo=pytz.utc).astimezone().strftime("%Y-%m-%d %H:%M:%S")
