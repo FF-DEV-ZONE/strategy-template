@@ -86,14 +86,15 @@ self.dataX # 表示 self.datas[X]
 
 ### 3.1 市场行情
 
-self.data，包含了所有加入到引擎中的市场行情数据源，可用行情数据类型详见 Reference - MyFeed - 内部Lines。
+self.data，包含了所有加入到引擎中的市场行情数据源，可用行情数据类型详见 [Reference - MyFeed - 内部Lines](#MyFeed)。
 
-<font color='red'>目前我们系统策略回测编写中只使用到1个市场行情，即self.datas[0]，并且都是1分钟级别行情数据</font>
+<span style="color:red; font-weight:bold;">目前我们系统策略回测编写中只使用到1个市场行情，即self.datas[0]，并且都是1分钟级别行情数据</span>
 
 ### 3.2 券商Broker
 
 self.broker.getcash()返回可用余额，单位为港币；
-self.broker.getvalue()返回账户价值，%%补充定义；
+
+self.broker.getvalue()返回账户价值，账户价值 = 账户可用余额 + 未实现盈亏；
 
 ### 3.3 仓位
 
@@ -103,9 +104,9 @@ self.position.size，返回仓位数量，大于0表示多头仓位，小于0表
 
 可在策略的构造函数init中声明指标a，在next方法中通过self.a访问该指标，self.a[0]指标的当前值，self.a[-1]指标的上一个值。
 
-目前指标分为内部指标和backtrader可用指标，<font color='red'>目前内部信号都是1分钟级别信号</font>，可用内部指标如下：
-- Trend 行情未来趋势的预测指标信号，详见Reference - Trend
-- TurningPoint 对行情转折预测的信号，详见Reference - Trend
+目前指标分为内部指标和backtrader可用指标，<span style="color:red; font-weight:bold;">目前内部信号都是1分钟级别信号</span>，可用内部指标如下：
+- **Trend** 行情未来趋势的预测指标信号，详见[Reference - Trend](#Trend)
+- **TurningPoint** 对行情转折预测的信号，详见[Reference - TurningPoint](#TurningPoint)
   
 如何给策略加上指标，代码示例如下：
 ```python
@@ -113,15 +114,15 @@ import backtrader as bt
 from ffquant.feeds.MyFeed import MyFeed
 # 引入内部指标Trend
 from ffquant.indicators.Trend import Trend
-# 引入backtrader本身的指标 %%补充
 
 import pytz
 
 class SimpleStrategy(bt.Strategy):
     def __init__(self):
         super(SimpleStrategy, self).__init__()
-        # 申明指标
+        # 声明指标
         self.trend = Trend(symbol="CAPITALCOM:HK50")
+        # self.sma = bt.indicators.SimpleMovingAverage(self.datas[0], period=10) # 引入backtrader自带的指标
 
     def next(self):
         dt = self.data.datetime.datetime(0).replace(tzinfo=pytz.utc).astimezone().strftime("%Y-%m-%d %H:%M:%S")
@@ -216,7 +217,32 @@ if __name__ == '__main__':
     # cerebro.run() 
     run_and_show_performance(cerebro)
 ```
-%%补充性能展示有哪些值，说明 截图
+
+- **总体性能**
+
+(图中的数值仅作示例)
+
+<img src="./images/overall_metrics.png" alt="Alt text" width="400">
+
+总体性能的分项指标说明如下：
+
+|分项指标|说明|
+|------|------|
+|Total Return |回测周期结束时的账户价值相对于开始时的收益率|
+|Annualized Return|年化收益率 每日交易时间390分钟 一年交易日252天|
+|Annual Return Volatility|年化收益波动率|
+|Sharpe Ratio|无风险年化利率可以通过 run_and_show_performance(cerebro, riskfree_rate=0.05)这样的形式指定|
+|Risk Reward Ratio|盈亏比 平仓单的平均收益除以平仓单的平均亏损|
+|Win Rate|盈利的平仓单占总平仓单的比例|
+|Close Order Average Return|平仓单的平均收益率|
+
+- **账户价值、买卖点、回撤、仓位**
+
+(图中的数值仅作示例)
+
+<img src="./images/perf_result.png" alt="Alt text" width="400">
+
+
 
 恭喜你，你完成了你的第一个Backtrader策略。你可以继续查阅本文档的其他部分优化策略。
 
