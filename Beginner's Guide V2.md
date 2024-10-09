@@ -88,7 +88,8 @@ self.dataX # 表示 self.datas[X]
 
 self.data，包含了所有加入到引擎中的市场行情数据源，可用行情数据类型详见 [Reference - MyFeed - 内部Lines](#MyFeed)。
 
-<span style="color:red; font-weight:bold;">目前我们系统策略回测编写中只使用到1个市场行情，即self.datas[0]，并且都是1分钟级别行情数据</span>
+> [!IMPORTANT]
+> 目前我们系统策略回测编写中只使用到1个市场行情，即self.datas[0]，并且都是1分钟级别行情数据</span>
 
 ### 3.2 券商Broker
 
@@ -104,9 +105,10 @@ self.position.size，返回仓位数量，大于0表示多头仓位，小于0表
 
 可在策略的构造函数init中声明指标a，在next方法中通过self.a访问该指标，self.a[0]指标的当前值，self.a[-1]指标的上一个值。
 
-指标分为内部指标和backtrader可用指标，<span style="color:red; font-weight:bold;">目前内部信号都是1分钟级别信号</span>，可用内部指标如下：
-- **Trend** 行情未来趋势的预测指标信号，详见[Reference - Trend](#Trend)
-- **TurningPoint** 对行情转折预测的信号，详见[Reference - TurningPoint](#TurningPoint)
+> [!IMPORTANT]
+> 指标分为内部指标和backtrader可用指标，目前内部信号都是1分钟级别信号，可用内部指标如下：
+> - **Trend** 行情未来趋势的预测指标信号，详见[Reference - Trend](#Trend)
+> - **TurningPoint** 对行情转折预测的信号，详见[Reference - TurningPoint](#TurningPoint)
   
 如何给策略加上指标，代码示例如下：
 ```python
