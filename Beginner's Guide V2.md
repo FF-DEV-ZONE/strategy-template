@@ -93,6 +93,7 @@ self.data，包含了所有加入到引擎中的市场行情数据源，可用�
 ### 3.2 券商Broker
 
 self.broker.getcash()返回可用余额，单位为港币；
+
 self.broker.getvalue()返回账户价值，%%补充定义；
 
 ### 3.3 仓位
@@ -105,7 +106,7 @@ self.position.size，返回仓位数量，大于0表示多头仓位，小于0表
 
 目前指标分为内部指标和backtrader可用指标，<font color='red'>目前内部信号都是1分钟级别信号</font>，可用内部指标如下：
 - Trend 行情未来趋势的预测指标信号，详见Reference - Trend
-- TurningPoint 对行情转折预测的信号，详见Reference - Trend
+- TurningPoint 对行情转折预测的信号，详见Reference - TurningPoint
   
 如何给策略加上指标，代码示例如下：
 ```python
